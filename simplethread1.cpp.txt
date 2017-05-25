@@ -1,0 +1,43 @@
+// Example program
+#include <iostream>
+#include <string>
+#include <thread>
+
+//default all values passed as value in thread , eventhoufh we specified &
+
+class ABC
+{
+    public:
+    void operator()(std::string &s)
+    {
+        s="i am chnaged to blue";
+        std::cout<<s;
+    }
+};    
+
+
+void fun()
+{
+    std::cout<<"hello";
+}    
+    
+
+void fun2(std::string s2)
+{
+    std::cout<<s2;
+}    
+    
+
+int main()
+{
+    std::thread t1(fun);
+ 
+    std::string mycolour="red";
+    std::thread t2(ABC(),std::ref(mycolour));
+    std::thread t3(ABC(),mycolour);	
+    std::cout<<std::endl<<"new:"<<mycolour;
+    
+    t1.join();
+    t2.join();
+    t3.join();
+}    
